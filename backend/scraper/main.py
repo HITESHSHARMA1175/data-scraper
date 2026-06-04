@@ -3,6 +3,7 @@
 import time
 import os
 import csv
+import traceback
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -112,6 +113,7 @@ try:
 
     # Find and save data in CSV
     csv_filename = os.path.join(output_dir, f"{url.split('/')[-2]}.csv")
+    print("DEBUG: csv_filename =", csv_filename)
     with open(csv_filename, 'w', newline='', encoding='utf-8') as csvfile:
         fieldnames = ['Name', 'Address', 'Phone']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
@@ -220,9 +222,12 @@ try:
                         error_file.write(f"An error occurred in parent div {index}: {str(e)}\n")
 
     print(f"Data extraction completed and saved to '{csv_filename}'.")
+    print(f"DEBUG: saved_rows = {saved_rows if 'saved_rows' in locals() else 0}")
 
 except Exception as e:
     print(f"An unexpected error occurred: {str(e)}")
+    # Print full traceback to stdout for easier debugging
+    print(traceback.format_exc())
 
 finally:
     # Print script completion message

@@ -61,6 +61,9 @@ def scrape():
             text=True,
         )
         print(result.stdout)
+        if result.stderr:
+            print("--- Scraper STDERR ---")
+            print(result.stderr)
         
         # Clean up temp_url.txt
         if temp_url_path.exists():
