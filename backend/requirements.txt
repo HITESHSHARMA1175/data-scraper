@@ -1,0 +1,7 @@
+undetected-chromedriver
+pandas
+flask
+flask-cors
+selenium
+distutils
+setuptools

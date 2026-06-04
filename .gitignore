@@ -2,6 +2,10 @@
 Scrapped/
 Clean Data/
 
+# Virtual environment folders
+venv/
+.venv/
+
 # Ignore the page_source.html file
 page_source.html
 stop.txt
