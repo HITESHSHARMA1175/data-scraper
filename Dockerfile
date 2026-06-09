@@ -1,18 +1,10 @@
-FROM python:3.10-slim
+FROM python:3.10
 
-# Install system dependencies and Google Chrome
+# Using the full python:3.10 image ensures we have all necessary system libraries.
+# We only need to install chromium and xvfb for headless browser support.
 RUN apt-get update && apt-get install -y \
     chromium \
-    wget \
-    gnupg \
-    unzip \
     xvfb \
-    libgconf-2-4 \
-    libnss3 \
-    libxss1 \
-    libasound2 \
-    fonts-liberation \
-    libappindicator3-1 \
     xdg-utils \
     && rm -rf /var/lib/apt/lists/*
 
