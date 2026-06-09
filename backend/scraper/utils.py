@@ -71,7 +71,7 @@ def create_stealth_driver(headless=False):
     # Headless mode setup for undetected-chromedriver requires special arguments or version support.
     # Generally, headless can be detected more easily, so non-headless is default.
     if headless or os.environ.get('RENDER') == 'true':
-        options.add_argument('--headless')
+        options.add_argument('--headless=new')
         
     options.add_argument('--disable-gpu')
     options.add_argument('--no-sandbox')
