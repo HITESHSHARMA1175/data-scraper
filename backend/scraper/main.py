@@ -9,8 +9,8 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from utils import human_like_scroll, create_stealth_driver
 
-TARGET_RECORDS = int(os.environ.get('SCRAPER_TARGET_RECORDS', '100'))
-MAX_SCROLL_SECONDS = int(os.environ.get('SCRAPER_MAX_SCROLL_SECONDS', '300'))
+TARGET_RECORDS = int(os.environ.get('SCRAPER_TARGET_RECORDS', '10'))
+MAX_SCROLL_SECONDS = int(os.environ.get('SCRAPER_MAX_SCROLL_SECONDS', '120'))
 
 def get_url_input():
     # Ask the user if they have a URL or need to enter city/keyword
