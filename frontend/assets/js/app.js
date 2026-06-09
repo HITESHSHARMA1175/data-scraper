@@ -1,4 +1,7 @@
-const API_URL = '/api';
+let API_URL = '/api';
+if (window.location.hostname === 'localhost' && window.location.port !== '5000') {
+    API_URL = 'http://localhost:5000/api';
+}
 
         // Toggle input method
         function toggleInputMethod() {
