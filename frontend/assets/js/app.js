@@ -93,7 +93,10 @@ const API_URL = 'http://localhost:5000/api';
             }
 
             let html = `
-                <h3 style="color: #333; margin-bottom: 15px;">Results from ${filename}</h3>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                    <h3 style="color: #333; margin: 0;">Results from ${filename}</h3>
+                    <button onclick="downloadFile('${filename}')" style="padding: 5px 15px;">Download CSV</button>
+                </div>
                 <p style="color: #666; margin-bottom: 15px;">Records found: <strong>${data.length}</strong></p>
                 <div class="table-container">
                     <table>
@@ -146,11 +149,14 @@ const API_URL = 'http://localhost:5000/api';
                         const date = new Date(file.modified).toLocaleString();
                         const sizeKB = (file.size / 1024).toFixed(2);
                         html += `
-                            <div class="file-item" onclick="viewFile('${file.name}')">
-                                <div class="file-name">📄 ${file.name}</div>
-                                <div class="file-info">
-                                    Size: ${sizeKB} KB | Modified: ${date}
+                            <div class="file-item" onclick="viewFile('${file.name}')" style="display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <div class="file-name">📄 ${file.name}</div>
+                                    <div class="file-info">
+                                        Size: ${sizeKB} KB | Modified: ${date}
+                                    </div>
                                 </div>
+                                <button onclick="downloadFile('${file.name}', event)" style="padding: 5px 10px; font-size: 14px; cursor: pointer; border: 1px solid #4a6ee0; background: transparent; color: #4a6ee0; border-radius: 4px;">Download</button>
                             </div>
                         `;
                     });
@@ -160,6 +166,14 @@ const API_URL = 'http://localhost:5000/api';
             } catch (error) {
                 console.error('Error fetching files:', error);
             }
+        }
+
+        // Download file
+        function downloadFile(filename, event) {
+            if (event) {
+                event.stopPropagation();
+            }
+            window.location.href = `${API_URL}/download/${encodeURIComponent(filename)}`;
         }
 
         // View file

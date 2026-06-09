@@ -4,7 +4,7 @@ import subprocess
 import csv
 import threading
 import webbrowser
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_file
 from flask_cors import CORS
 from pathlib import Path
 
@@ -143,6 +143,14 @@ def get_file(filename):
         })
     except Exception as e:
         return jsonify({"success": False, "error": str(e)}), 500
+
+@app.route('/api/download/<filename>', methods=['GET'])
+def download_file(filename):
+    file_path = SCRAPPED_DIR / filename
+    if not file_path.exists():
+        return jsonify({"success": False, "error": "File not found"}), 404
+        
+    return send_file(file_path, as_attachment=True, download_name=filename)
 
 @app.route('/api/stats', methods=['GET'])
 def get_stats():
