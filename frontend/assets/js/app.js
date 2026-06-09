@@ -55,25 +55,31 @@ const API_URL = '/api';
                     body: JSON.stringify(payload)
                 });
 
-                const result = await response.json();
+                const contentType = response.headers.get("content-type");
+                if (contentType && contentType.indexOf("application/json") !== -1) {
+                    const result = await response.json();
 
-                if (result.success) {
-                    showMessage('Scraping completed successfully!', 'success');
-                    displayPreview(result.data, result.filename);
-                    refreshFiles();
-                    refreshStats();
-                    // Clear inputs based on chosen method
-                    if (method === 'url') {
-                        const urlInput = document.getElementById('urlInput');
-                        if (urlInput) urlInput.value = '';
+                    if (result.success) {
+                        showMessage('Scraping completed successfully!', 'success');
+                        displayPreview(result.data, result.filename);
+                        refreshFiles();
+                        refreshStats();
+                        // Clear inputs based on chosen method
+                        if (method === 'url') {
+                            const urlInput = document.getElementById('urlInput');
+                            if (urlInput) urlInput.value = '';
+                        } else {
+                            const cityInput = document.getElementById('cityInput');
+                            const keywordInput = document.getElementById('keywordInput');
+                            if (cityInput) cityInput.value = '';
+                            if (keywordInput) keywordInput.value = '';
+                        }
                     } else {
-                        const cityInput = document.getElementById('cityInput');
-                        const keywordInput = document.getElementById('keywordInput');
-                        if (cityInput) cityInput.value = '';
-                        if (keywordInput) keywordInput.value = '';
+                        showMessage(`Error: ${result.error}`, 'error');
                     }
                 } else {
-                    showMessage(`Error: ${result.error}`, 'error');
+                    const text = await response.text();
+                    showMessage(`Server Error (Timeout/Crash). Check backend logs.`, 'error');
                 }
             } catch (error) {
                 showMessage(`Error: ${error.message}`, 'error');

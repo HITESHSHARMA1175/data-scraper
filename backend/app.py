@@ -14,6 +14,14 @@ FRONTEND_DIR = (BACKEND_DIR.parent / 'frontend').resolve()
 app = Flask(__name__, static_folder=str(FRONTEND_DIR), static_url_path='/')
 CORS(app)
 
+@app.errorhandler(500)
+def internal_server_error(e):
+    return jsonify({"success": False, "error": "Internal Server Error", "details": str(e)}), 500
+
+@app.errorhandler(Exception)
+def handle_exception(e):
+    return jsonify({"success": False, "error": str(e)}), 500
+
 # Prefer a `data` folder for outputs; fall back to legacy `Scrapped` for compatibility.
 SCRAPPED_DIR = BACKEND_DIR / 'data'
 LEGACY_SCRAPPED = BACKEND_DIR / 'Scrapped'

@@ -25,5 +25,4 @@ WORKDIR /app/backend
 ENV PORT=10000
 EXPOSE $PORT
 
-# Use increased timeout for long scraping processes
-CMD gunicorn --bind 0.0.0.0:$PORT --timeout 120 app:app
+CMD gunicorn --bind 0.0.0.0:$PORT --timeout 600 app:app
