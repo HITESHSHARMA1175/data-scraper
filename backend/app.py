@@ -8,10 +8,12 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from pathlib import Path
 
-app = Flask(__name__)
+BACKEND_DIR = Path(__file__).parent
+FRONTEND_DIR = (BACKEND_DIR.parent / 'frontend').resolve()
+
+app = Flask(__name__, static_folder=str(FRONTEND_DIR), static_url_path='/')
 CORS(app)
 
-BACKEND_DIR = Path(__file__).parent
 # Prefer a `data` folder for outputs; fall back to legacy `Scrapped` for compatibility.
 SCRAPPED_DIR = BACKEND_DIR / 'data'
 LEGACY_SCRAPPED = BACKEND_DIR / 'Scrapped'
@@ -21,6 +23,10 @@ if not SCRAPPED_DIR.exists():
         SCRAPPED_DIR = LEGACY_SCRAPPED
     else:
         SCRAPPED_DIR.mkdir(exist_ok=True)
+
+@app.route('/')
+def index():
+    return app.send_static_file('index.html')
 
 @app.route('/api/scrape', methods=['POST'])
 def scrape():

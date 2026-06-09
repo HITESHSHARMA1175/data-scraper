@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: justdial-scraper
+    env: docker
+    plan: free
+    autoDeploy: false
+    envVars:
+      - key: SCRAPER_HEADLESS
+        value: "true"

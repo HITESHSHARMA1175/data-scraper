@@ -3,5 +3,5 @@ pandas
 flask
 flask-cors
 selenium
-distutils
 setuptools
+gunicorn
