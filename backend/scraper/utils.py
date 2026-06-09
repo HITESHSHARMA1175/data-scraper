@@ -70,24 +70,32 @@ def create_stealth_driver(headless=False):
     
     # Headless mode setup for undetected-chromedriver requires special arguments or version support.
     # Generally, headless can be detected more easily, so non-headless is default.
-    if headless:
+    if headless or os.environ.get('RENDER') == 'true':
         options.add_argument('--headless')
         
     options.add_argument('--disable-gpu')
     options.add_argument('--no-sandbox')
     options.add_argument('--disable-dev-shm-usage')
     
+    browser_executable_path = None
     if os.path.exists('/usr/bin/chromium'):
-        options.binary_location = '/usr/bin/chromium'
+        browser_executable_path = '/usr/bin/chromium'
     
     # Detect Chrome version to prevent mismatch issues
     major_version = get_chrome_major_version()
     if major_version:
         print(f"Detected Google Chrome major version: {major_version}")
-        driver = uc.Chrome(options=options, version_main=major_version)
+        driver = uc.Chrome(
+            options=options, 
+            version_main=major_version,
+            browser_executable_path=browser_executable_path
+        )
     else:
         print("Could not detect Google Chrome major version. Falling back to default initialization.")
-        driver = uc.Chrome(options=options)
+        driver = uc.Chrome(
+            options=options,
+            browser_executable_path=browser_executable_path
+        )
     
     # Set standard window size
     driver.set_window_size(1280, 800)
