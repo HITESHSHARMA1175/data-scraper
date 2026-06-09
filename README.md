@@ -1,38 +1,46 @@
-# JustDial Data Scraping Script - 2024 August Working Confirmed
+# JustDial Data Scraper
 
-This script uses Selenium to scrape data from Justdial. It automates the process of opening a webpage, handling popups, scrolling, and extracting contact information, then saves the data into a CSV file.
+A web application that scrapes business listings from JustDial based on city and keywords. Built with a Flask backend, a vanilla HTML/JS frontend, and an automated scraper using `undetected-chromedriver`.
 
 ## Features
+- Scrape JustDial listings automatically.
+- Save scraped data into CSV files.
+- Modern frontend for inputting target URLs or city/keywords.
+- Unified web service: backend serves the frontend statically.
+- Configured for Docker and Render deployment.
 
-- **Dynamic URL Generation:** Constructs the URL based on user input for city and keyword.
-- **Popup Handling:** Automatically closes certain popups that may interfere with scraping.
-- **Human-like Scrolling:** Scrolls the page smoothly to load more content.
-- **Data Extraction:** Collects names, addresses, and phone numbers.
-- **Data Saving:** Saves the extracted data in a CSV file within a `Scrapped` folder, named after the search keyword.
+## Tech Stack
+- **Frontend**: HTML, Vanilla JS, CSS
+- **Backend**: Python, Flask, Gunicorn
+- **Scraper**: Selenium, undetected-chromedriver
+- **Deployment**: Docker, Render
 
-## Prerequisites
+## Running Locally
 
-Before running the script, make sure you have the following installed:
+1. Create a Python virtual environment and activate it:
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows: .\venv\Scripts\activate
+   ```
+2. Install the required dependencies:
+   ```bash
+   pip install -r backend/requirements.txt
+   ```
+3. Run the application (this will start the Flask server which also serves the frontend):
+   ```bash
+   cd backend
+   python app.py
+   ```
+4. Open http://localhost:5000 in your browser.
 
-- Python 3.x
-- pip (Python package installer)
+## Deployment on Render
 
-## Installation
+This project is configured to be deployed on Render using a Docker container, which guarantees that Google Chrome is installed for the `undetected-chromedriver` to work properly.
 
-1. **Clone or Download the Repository**
+1. Push all your code to a GitHub repository.
+2. Go to the [Render Dashboard](https://dashboard.render.com).
+3. Click on **New** -> **Blueprint**.
+4. Connect the repository. Render will detect the `render.yaml` file.
+5. Deploy the Web Service.
 
-   Clone the repository to your local machine or download the script file:
-
-   ```sh
-   git clone https://github.com/r7avi/JustDial-Data-Scrapper.git
-   cd JustDial-Data-Scrapper
-   pip install -r requirements.txt
-
-## NOTE :
-Please Request Issue if you need any Upgrades or Feature, Iam happy to Fix or Add feature. & New Ideas welcome
-
-## Screenshots 
-
-   ![image](https://github.com/user-attachments/assets/db720fd4-a662-4571-bcca-44fe20f242aa)
-   ![image](https://github.com/user-attachments/assets/02af2345-6095-4a33-a229-ead54046abd5)
-
+**Note on Scraping Limits**: Web scraping JustDial is intensive and may hit Render's free tier memory limits. Keep an eye on the logs during execution.
