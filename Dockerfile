@@ -3,7 +3,6 @@ FROM python:3.10-slim
 # Install system dependencies and Google Chrome
 RUN apt-get update && apt-get install -y \
     chromium \
-    chromium-driver \
     wget \
     gnupg \
     unzip \
