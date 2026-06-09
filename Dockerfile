@@ -2,6 +2,8 @@ FROM python:3.10-slim
 
 # Install system dependencies and Google Chrome
 RUN apt-get update && apt-get install -y \
+    chromium \
+    chromium-driver \
     wget \
     gnupg \
     unzip \
@@ -13,9 +15,6 @@ RUN apt-get update && apt-get install -y \
     fonts-liberation \
     libappindicator3-1 \
     xdg-utils \
-    && wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb \
-    && apt-get install -y ./google-chrome-stable_current_amd64.deb \
-    && rm google-chrome-stable_current_amd64.deb \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app

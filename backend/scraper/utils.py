@@ -77,6 +77,9 @@ def create_stealth_driver(headless=False):
     options.add_argument('--no-sandbox')
     options.add_argument('--disable-dev-shm-usage')
     
+    if os.path.exists('/usr/bin/chromium'):
+        options.binary_location = '/usr/bin/chromium'
+    
     # Detect Chrome version to prevent mismatch issues
     major_version = get_chrome_major_version()
     if major_version:
